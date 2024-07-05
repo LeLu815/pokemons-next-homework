@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 
 import { fetchPokemonData } from "@/api/pokemon";
+import Button from "@/components/Button";
 import { Metadata } from "next";
 
 type Props = {
@@ -53,12 +53,9 @@ async function PokemonDetailPage({ params }: { params: { id: string } }) {
         </div>
 
         <div className="py-6">
-          <Link
-            className="px-3 py-1.5 bg-blue-500 border-none rounded text-white cursor-pointer"
-            href="/"
-          >
+          <Button intent="primary" outlined={false} href="/">
             뒤로가기
-          </Link>
+          </Button>
         </div>
       </div>
     </div>
