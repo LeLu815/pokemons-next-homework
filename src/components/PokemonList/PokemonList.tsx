@@ -5,8 +5,12 @@ import Link from "next/link";
 import React, { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-import { usePokemonInfiniteQuery } from "@/react-query/usePokemonQuery";
+import {
+  ROWS_PER_PAGE,
+  usePokemonInfiniteQuery,
+} from "@/react-query/usePokemonQuery";
 import CircularIndeterminate from "../Progress/Progress";
+import SkeletonComponent from "../Skeleton/Skeleton";
 
 function PokemonList() {
   const { ref, inView, entry } = useInView();
@@ -26,7 +30,11 @@ function PokemonList() {
 
   if (isPending) {
     return (
-      <div className="grid gap-3 min-[320px]:grid-cols-2 min-[500px]:grid-cols-3 sm:grid-cols-4 min-[900px]:grid-cols-5 lg:grid-cols-6"></div>
+      <div className="grid gap-3 min-[320px]:grid-cols-2 min-[500px]:grid-cols-3 sm:grid-cols-4 min-[900px]:grid-cols-5 lg:grid-cols-6">
+        {Array.from({ length: ROWS_PER_PAGE }, (_, index) => {
+          return <SkeletonComponent key={index} />;
+        })}
+      </div>
     );
   }
   return (

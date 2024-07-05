@@ -3,8 +3,6 @@ import { NextResponse } from "next/server";
 
 import { PokemonResponse, PokemonSpeciesResponse } from "@/types/Pokemons";
 
-const TOTAL_POKEMON = 151;
-
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);
   const limit = parseInt(searchParams.get("limit") || "30", 10);
