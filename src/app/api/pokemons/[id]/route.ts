@@ -1,6 +1,8 @@
 import axios from "axios";
 import { NextResponse } from "next/server";
 
+import { PokemonResponse, PokemonSpeciesResponse } from "@/types/Pokemons";
+
 export const GET = async (
   request: Request,
   { params }: { params: { id: string } }
@@ -8,8 +10,10 @@ export const GET = async (
   const { id } = params;
 
   try {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    const speciesResponse = await axios.get(
+    const response = await axios.get<PokemonResponse>(
+      `https://pokeapi.co/api/v2/pokemon/${id}`
+    );
+    const speciesResponse = await axios.get<PokemonSpeciesResponse>(
       `https://pokeapi.co/api/v2/pokemon-species/${id}`
     );
 

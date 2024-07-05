@@ -1,6 +1,14 @@
 import { Pokemon } from "@/types/Pokemons";
-import { DefaultError, useQuery } from "@tanstack/react-query";
+import {
+  DefaultError,
+  InfiniteData,
+  QueryKey,
+  useInfiniteQuery,
+  useQuery,
+} from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
+
+export const ROWS_PER_PAGE = 30; // 한 페이지당 불러올 상품개수
 
 export const usePokemonQuery = () => {
   return useQuery<AxiosResponse<Pokemon[]>, DefaultError, Pokemon[]>({
@@ -9,5 +17,35 @@ export const usePokemonQuery = () => {
     select: (response) => response.data,
     refetchOnWindowFocus: false,
     staleTime: 1000 * 60 * 3,
+  });
+};
+
+export const usePokemonInfiniteQuery = () => {
+  return useInfiniteQuery<
+    Pokemon[],
+    DefaultError,
+    InfiniteData<Pokemon[], number>,
+    QueryKey,
+    number
+  >({
+    queryKey: ["pokemons"],
+    queryFn: async ({ pageParam = 0 }) => {
+      const response: AxiosResponse<Pokemon[]> = await axios.get(
+        `/api/pokemons/?limit=${ROWS_PER_PAGE}&offset=${pageParam}`
+      );
+      return response.data;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length === ROWS_PER_PAGE) {
+        return allPages.length + 1;
+      } else {
+        return undefined;
+      }
+    },
+    initialPageParam: 0,
+    retry: 0,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
   });
 };
