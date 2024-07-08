@@ -47,5 +47,8 @@ export const usePokemonInfiniteQuery = () => {
     refetchOnMount: false,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 3,
   });
 };
+
+// 데이터가 남아있어야 돌아올 곳이 있다.

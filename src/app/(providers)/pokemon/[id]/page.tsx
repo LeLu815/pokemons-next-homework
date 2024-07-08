@@ -53,7 +53,7 @@ async function PokemonDetailPage({ params }: { params: { id: string } }) {
         </div>
 
         <div className="py-6">
-          <Button intent="primary" outlined={false} href="/">
+          <Button intent="primary" outlined={false} href="/" scroll={false}>
             뒤로가기
           </Button>
         </div>
