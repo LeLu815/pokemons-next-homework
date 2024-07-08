@@ -1,19 +1,31 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
+import { useLoading } from "@/contexts/loading.context/loading.context";
 import { Pokemon } from "@/types/Pokemons";
+import { useEffect } from "react";
 
 type PokemonCardProps = {
   pokemon: Pokemon;
 };
 
 function PokemonCard({ pokemon }: PokemonCardProps) {
+  const { openLoading, closeLoading } = useLoading();
+  useEffect(() => {
+    return () => {
+      closeLoading();
+    };
+  }, []);
+
   return (
     <div
       className="flex max-w-[270px] justify-center items-center border border-slate-500 aspect-square rounded-md cursor-pointer text-white"
       key={pokemon.id}
     >
       <Link
+        onClick={() => openLoading()}
         className="flex justify-center items-center flex-col"
         href={`/pokemon/${pokemon.id}`}
       >
