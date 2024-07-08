@@ -31,7 +31,7 @@ export function LoadingProvider({ children }: PropsWithChildren) {
     <LoadingContext.Provider value={value}>
       {children}
       {isLoading && (
-        <div className="fixed top-0 left-0 bottom-0 right-0 flex items-center justify-center backdrop-brightness-75">
+        <div className="fixed top-0 left-0 bottom-0 right-0 flex items-center justify-center backdrop-brightness-[0.35]">
           <CircularProgress />
         </div>
       )}
